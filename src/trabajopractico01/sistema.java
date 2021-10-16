@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class sistema {
-   ArrayList <persona> RegistroDeVotantes;
+   ArrayList <persona> RegistroDeVotantes;//agrego comentario de prueba "ama gay "
    ArrayList <mesa> RegistroDeMesas;
    ArrayList <persona> PersonasQueVotaron;
    ArrayList <persona> PersonasConTurno;
