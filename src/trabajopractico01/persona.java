@@ -9,6 +9,7 @@ public class persona {
 	protected boolean tiene_enfermedad;
 	protected boolean es_trabajador;
 	protected boolean es_presidente;
+	protected boolean tiene_turno;
 
 
 
@@ -20,13 +21,26 @@ public class persona {
 
 
 
+public boolean isTiene_turno() {
+	return tiene_turno;
+}
+
+
+
+public void setTiene_turno(boolean tiene_turno) {
+	this.tiene_turno = tiene_turno;
+}
+
+
+
 public persona (Integer dni , String nombre , Integer edad ,boolean enfermedad , boolean trabajador ){
 	this.dni=dni;
 	this.nombre=nombre;
 	this.edad=edad;
 	this.tiene_enfermedad=enfermedad;
 	this.es_trabajador=trabajador;
-	this.es_presidente=false;	
+	this.es_presidente=false;
+	this.tiene_turno=false;	
 }
 
 

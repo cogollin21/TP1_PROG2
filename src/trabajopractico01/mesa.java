@@ -1,9 +1,16 @@
 package trabajopractico01;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
 public abstract class mesa {
+	String tipo;
 	persona presidente;
 	Integer numerodemesa;
 	static	Integer cantmesas=0;
+	Map <Integer , ArrayList <turno>> turnosdisponibles= new HashMap <Integer,ArrayList <turno>>();;
 
 
 
@@ -12,14 +19,44 @@ public  void agregarpresidente (persona p) {
 	
 }
 
-public boolean equalsto ( mesa m) {
-	if (this.numerodemesa==m.getNumerodemesa()) {
-		return true;
-	}
-	else {
-		return false;
-	}
+
+
+
+public String getTipo() {
+	return tipo;
 }
+
+
+
+
+public void setTipo(String tipo) {
+	this.tipo = tipo;
+}
+
+
+
+
+@Override
+public int hashCode() {
+	return Objects.hash(numerodemesa);
+}
+
+
+
+
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	mesa other = (mesa) obj;
+	return Objects.equals(numerodemesa, other.numerodemesa);
+}
+
+
 
 
 public persona getPresidente() {
