@@ -10,6 +10,7 @@ public class persona {
 	protected boolean es_trabajador;
 	protected boolean es_presidente;
 	protected boolean tiene_turno;
+	protected boolean ya_voto;
 
 
 
@@ -40,7 +41,20 @@ public persona (Integer dni , String nombre , Integer edad ,boolean enfermedad ,
 	this.tiene_enfermedad=enfermedad;
 	this.es_trabajador=trabajador;
 	this.es_presidente=false;
-	this.tiene_turno=false;	
+	this.tiene_turno=false;
+	this.ya_voto=false;
+}
+
+
+
+public boolean isYa_voto() {
+	return ya_voto;
+}
+
+
+
+public void setYa_voto(boolean ya_voto) {
+	this.ya_voto = ya_voto;
 }
 
 

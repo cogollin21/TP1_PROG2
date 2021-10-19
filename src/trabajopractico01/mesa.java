@@ -10,6 +10,7 @@ public abstract class mesa {
 	persona presidente;
 	Integer numerodemesa;
 	static	Integer cantmesas=0;
+	Integer cantdevotantesenmesa=0;
 	Map <Integer , ArrayList <turno>> turnosdisponibles= new HashMap <Integer,ArrayList <turno>>();;
 
 
@@ -17,6 +18,26 @@ public abstract class mesa {
 public  void agregarpresidente (persona p) {
 	this.presidente = p;
 	
+}
+
+public Integer getCantdevotantesenmesa() {
+	return cantdevotantesenmesa;
+}
+
+public Map<Integer, ArrayList<turno>> getTurnosdisponibles() {
+	return turnosdisponibles;
+}
+
+public void setTurnosdisponibles(Map<Integer, ArrayList<turno>> turnosdisponibles) {
+	this.turnosdisponibles = turnosdisponibles;
+}
+
+public void setCantdevotantesenmesa(Integer cantdevotantesenmesa) {
+	this.cantdevotantesenmesa = cantdevotantesenmesa;
+}
+
+public void sumarvotante () {
+	this.cantdevotantesenmesa++;
 }
 
 

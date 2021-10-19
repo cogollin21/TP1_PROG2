@@ -11,7 +11,7 @@ public class mesatrabajadores extends mesa {
 		this.turnosdisponibles.put(9,new ArrayList <turno>());
 		this.turnosdisponibles.put(10,new ArrayList <turno>());
 		this.turnosdisponibles.put(11,new ArrayList <turno>());
-		this.turnosdisponibles.put(12,new ArrayList <turno>());
+		
 		
 	}
 

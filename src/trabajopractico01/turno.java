@@ -13,6 +13,30 @@ public turno ( Integer franja , Integer numdemesa , Integer dni) {
 	this.dni=dni;
 }
 
+public Integer getFranja_horaria() {
+	return franja_horaria;
+}
+
+public void setFranja_horaria(Integer franja_horaria) {
+	this.franja_horaria = franja_horaria;
+}
+
+public Integer getNum_demesa() {
+	return num_demesa;
+}
+
+public void setNum_demesa(Integer num_demesa) {
+	this.num_demesa = num_demesa;
+}
+
+public Integer getDni() {
+	return dni;
+}
+
+public void setDni(Integer dni) {
+	this.dni = dni;
+}
+
 @Override
 public int hashCode() {
 	return Objects.hash(dni);
