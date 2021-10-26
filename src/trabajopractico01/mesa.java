@@ -20,6 +20,11 @@ public  void agregarpresidente (persona p) {
 	
 }
 
+public void agregarturno (turno t) { //agrega un turno en la primer franja , es para el presidente
+	this.turnosdisponibles.get(8).add(t);
+	
+}
+
 public Integer getCantdevotantesenmesa() {
 	return cantdevotantesenmesa;
 }
