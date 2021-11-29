@@ -3,16 +3,23 @@ package trabajopractico01;
 import java.util.Objects;
 
 public class persona {
-	protected Integer dni;
-	protected String nombre;
-	protected Integer edad;
-	protected boolean tiene_enfermedad;
-	protected boolean es_trabajador;
-	protected boolean es_presidente;
-	protected boolean tiene_turno;
-	protected boolean ya_voto;
+	private Integer dni;
+	private String nombre;
+	private Integer edad;
+	private boolean tiene_enfermedad;
+	private boolean es_trabajador;
+	private boolean es_presidente;
+	private boolean tiene_turno;
+	private boolean ya_voto;
 
 
+public boolean puedeSerPresidente () {
+	if (!this.isEs_presidente()&& !this.isTiene_turno()) {
+		return true;
+		
+	}
+	return false;
+}
 
 @Override
 	public String toString() {

@@ -17,6 +17,12 @@ public class mesamayores extends mesa {
 		this.turnosdisponibles.put(16,new ArrayList <turno>());
 		this.turnosdisponibles.put(17,new ArrayList <turno>());
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "presidente " +presidente+ "numero de mesa "+numerodemesa+" "+"mesa de tipo mayores";
+	}
 		
 	
 

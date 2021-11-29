@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class mesa {
-	String tipo;
-	persona presidente;
-	Integer numerodemesa;
-	static	Integer cantmesas=0;
-	Integer cantdevotantesenmesa=0;
-	Map <Integer , ArrayList <turno>> turnosdisponibles= new HashMap <Integer,ArrayList <turno>>();;
+	protected String tipo;
+	protected persona presidente;
+	protected Integer numerodemesa;
+	protected static	Integer cantmesas=0;
+	protected Integer cantdevotantesenmesa=0;
+	protected Map <Integer , ArrayList <turno>> turnosdisponibles= new HashMap <Integer,ArrayList <turno>>();;
 
 
 
@@ -94,9 +94,7 @@ public persona getPresidente() {
 
 
 @Override
-public String toString() {
-	return "mesa [presidente=" + presidente + ", numerodemesa=" + numerodemesa + "]";
-}
+ abstract public String toString();
 
 public Integer getNumerodemesa() {
 	return numerodemesa;

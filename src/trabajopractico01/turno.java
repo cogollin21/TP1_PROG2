@@ -3,9 +3,9 @@ package trabajopractico01;
 import java.util.Objects;
 
 public class turno {
-	Integer franja_horaria;
-	Integer num_demesa;
-	Integer dni;
+private	Integer franja_horaria;
+private	Integer num_demesa;
+private	Integer dni;
 	
 public turno ( Integer franja , Integer numdemesa , Integer dni) {
 	this.franja_horaria=franja;

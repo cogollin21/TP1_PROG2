@@ -19,56 +19,56 @@ import org.junit.Test;
 
 
 public class SistemaDeTurnosTest {
-	private sistema sistema;
+	private SistemaDeTurnos SistemaDeTurnos;
 	private static final Fixture F = Fixture.INSTANCE;
 	
 	@Before
 	public void setUp() {
-		sistema = new sistema("Sede UNGS");
+		SistemaDeTurnos = new SistemaDeTurnos("Sede UNGS");
 				
-		sistema.registrarVotante(
+		SistemaDeTurnos.registrarVotante(
 				F.dniFrodo, 
 				"Frodo", 
 				23, 
 				!F.tieneEnfPrevia, 
 				!F.trabaja
 		);
-		sistema.registrarVotante(
+		SistemaDeTurnos.registrarVotante(
 				F.dniEowyn,
 				"Eowyn",
 				25, 
 				F.tieneEnfPrevia, 
 				!F.trabaja
 		);
-		sistema.registrarVotante(
+		SistemaDeTurnos.registrarVotante(
 				F.dniBilbo,
 				"Bilbo", 
 				65, 
 				F.tieneEnfPrevia, 
 				!F.trabaja
 		);
-		sistema.registrarVotante(
+		SistemaDeTurnos.registrarVotante(
 				F.dniGandalf, 
 				"Gandalf", 
 				70, 
 				!F.tieneEnfPrevia, 
 				F.trabaja
 		);
-		sistema.registrarVotante(
+		SistemaDeTurnos.registrarVotante(
 				F.dniLegolas, 
 				"Legolas", 
 				80,
 				!F.tieneEnfPrevia, 
 				F.trabaja
 		);
-		sistema.registrarVotante(
+		SistemaDeTurnos.registrarVotante(
 				F.dniGaladriel, 
 				"Galadriel", 
 				81, 
 				!F.tieneEnfPrevia, 
 				F.trabaja
 		);
-		sistema.registrarVotante(
+		SistemaDeTurnos.registrarVotante(
 				F.dniArwen, 
 				"Arwen", 
 				50, 
@@ -88,16 +88,16 @@ public class SistemaDeTurnosTest {
 	 */
 	@Test
 	public void asignacionMesas() {
-		final Integer numMesaEnfPreexistente = sistema.
+		final Integer numMesaEnfPreexistente = SistemaDeTurnos.
 				agregarMesa(F.enfPreexistente, F.dniFrodo);  // frodo es el presidente
 		
-		final Integer numMesaMayor65 = sistema.
+		final Integer numMesaMayor65 = SistemaDeTurnos.
 				agregarMesa(F.mayor65, F.dniBilbo);
 		
-		final Integer numMesaGeneral = sistema.
+		final Integer numMesaGeneral = SistemaDeTurnos.
 				agregarMesa(F.general, F.dniGaladriel);
 		
-		final Integer numMesaTrabajador = sistema.
+		final Integer numMesaTrabajador = SistemaDeTurnos.
 				agregarMesa(F.trabajador, F.dniGandalf);
 		
 		assertNotNull(numMesaEnfPreexistente);
@@ -105,10 +105,10 @@ public class SistemaDeTurnosTest {
 		assertNotNull(numMesaGeneral);
 		assertNotNull(numMesaTrabajador);
 		
-		assertNotNull(sistema.consultarturno(F.dniFrodo));
-		assertNotNull(sistema.consultarturno(F.dniBilbo));
-		assertNotNull(sistema.consultarturno(F.dniGaladriel));
-		assertNotNull(sistema.consultarturno(F.dniGandalf));
+		assertNotNull(SistemaDeTurnos.consultarturno(F.dniFrodo));
+		assertNotNull(SistemaDeTurnos.consultarturno(F.dniBilbo));
+		assertNotNull(SistemaDeTurnos.consultarturno(F.dniGaladriel));
+		assertNotNull(SistemaDeTurnos.consultarturno(F.dniGandalf));
 	}
 	
 	/*
@@ -118,7 +118,7 @@ public class SistemaDeTurnosTest {
 	@Test
 	public void asignacionMesasDniInvalido() {
 		try {
-			sistema.agregarMesa(F.trabajador, F.dniSinRegistrar);
+			SistemaDeTurnos.agregarMesa(F.trabajador, F.dniSinRegistrar);
 			//Si llego hasta aca esta mal! deberia haber fallado
 			assertTrue(false);
 		}catch(Exception e) {
@@ -134,7 +134,7 @@ public class SistemaDeTurnosTest {
 	@Test
 	public void asignacionMesasTipomMesaInvalido() {
 		try {
-			sistema.agregarMesa(F.tipoMesaInvalida, F.dniFrodo);
+			SistemaDeTurnos.agregarMesa(F.tipoMesaInvalida, F.dniFrodo);
 			//Si llego hasta aca esta mal! deberia haber fallado
 			assertTrue(false);
 		} catch(Exception e) {
@@ -152,15 +152,15 @@ public class SistemaDeTurnosTest {
 	public void asignacionTest() {
 		final int votantesEsperados = 3;
 		
-		sistema.agregarMesa(F.enfPreexistente, F.dniFrodo);
+		SistemaDeTurnos.agregarMesa(F.enfPreexistente, F.dniFrodo);
 		
-		sistema.agregarMesa(F.mayor65, F.dniBilbo);
+		SistemaDeTurnos.agregarMesa(F.mayor65, F.dniBilbo);
 		
-		sistema.agregarMesa(F.general, F.dniGaladriel);
+		SistemaDeTurnos.agregarMesa(F.general, F.dniGaladriel);
 		
-		sistema.agregarMesa(F.trabajador, F.dniGandalf);
+		SistemaDeTurnos.agregarMesa(F.trabajador, F.dniGandalf);
 		
-		assertEquals(votantesEsperados, sistema.asignarTurnos());
+		assertEquals(votantesEsperados, SistemaDeTurnos.asignarTurnos());
 	}
 	
 	/*
@@ -171,13 +171,13 @@ public class SistemaDeTurnosTest {
 	 */
 	@Test
 	public void asignacionPorTipoMesaTest() {
-		final Integer numMesaTrabajadores = sistema.agregarMesa(F.trabajador, F.dniBilbo);
+		final Integer numMesaTrabajadores = SistemaDeTurnos.agregarMesa(F.trabajador, F.dniBilbo);
 				
 		
-		sistema.asignarTurnos();
+		SistemaDeTurnos.asignarTurnos();
 		
 		//Franja -> List<Dni>
-		final Map<Integer, List<Integer>> franjaHoraria = sistema.asignadosAMesa(numMesaTrabajadores);
+		final Map<Integer, List<Integer>> franjaHoraria = SistemaDeTurnos.asignadosAMesa(numMesaTrabajadores);
 
 		final Set<Integer> votantes = extraerVotantes(franjaHoraria.values());
 		
@@ -195,14 +195,14 @@ public class SistemaDeTurnosTest {
 	 */
 	@Test
 	public void votantesSinTurnoTest() {
-		sistema.agregarMesa(F.general, F.dniFrodo);
-		sistema.agregarMesa(F.enfPreexistente, F.dniEowyn);
-		sistema.agregarMesa(F.mayor65, F.dniBilbo);
+		SistemaDeTurnos.agregarMesa(F.general, F.dniFrodo);
+		SistemaDeTurnos.agregarMesa(F.enfPreexistente, F.dniEowyn);
+		SistemaDeTurnos.agregarMesa(F.mayor65, F.dniBilbo);
 		
-		sistema.asignarTurnos();
+		SistemaDeTurnos.asignarTurnos();
 		
 		// List<Tupla<TipoMesa, Cant Votantes Sin Turno>>
-		final List<Tupla<String, Integer>> votantesSinTurno = sistema.sinTurnoSegunTipoMesa();
+		final List<Tupla<String, Integer>> votantesSinTurno = SistemaDeTurnos.sinTurnoSegunTipoMesa();
 		
 		final Integer cantVotantesSinTurno = extraerVotantesSinTurno(votantesSinTurno);
 		
@@ -217,12 +217,12 @@ public class SistemaDeTurnosTest {
 	 */
 	@Test
 	public void asignarTurnoTest() {
-		sistema.agregarMesa(F.general, F.dniGaladriel);
+		SistemaDeTurnos.agregarMesa(F.general, F.dniGaladriel);
 		
 		// <NumeroMesa, FranjaHoraria>
-		final Tupla<Integer, Integer> turno = sistema.asignarTurno(F.dniFrodo);
+		final Tupla<Integer, Integer> turno = SistemaDeTurnos.asignarTurno(F.dniFrodo);
 		// <NumeroMesa, FranjaHoraria>
-		final Tupla<Integer, Integer> turnoAsignado = sistema.consultarturno(F.dniFrodo);
+		final Tupla<Integer, Integer> turnoAsignado = SistemaDeTurnos.consultarturno(F.dniFrodo);
 		
 		assertNotNull(turno);
 		assertNotNull(turnoAsignado);
@@ -234,9 +234,9 @@ public class SistemaDeTurnosTest {
 	 */
 	@Test
 	public void asignarTurnoDniInvalidoTest() {
-		sistema.agregarMesa(F.general, F.dniGaladriel);
+		SistemaDeTurnos.agregarMesa(F.general, F.dniGaladriel);
 		try {
-			sistema.asignarTurno(F.dniSinRegistrar);
+			SistemaDeTurnos.asignarTurno(F.dniSinRegistrar);
 			//Si llego hasta aca esta mal! deberia haber fallado
 			assertTrue(false);
 		}catch(Exception e) {
@@ -250,7 +250,7 @@ public class SistemaDeTurnosTest {
 	 */
 	@Test
 	public void asignarTurnoInvalidoTest() {
-		assertNull(sistema.asignarTurno(F.dniFrodo));
+		assertNull(SistemaDeTurnos.asignarTurno(F.dniFrodo));
 	}
 	
 	/*
@@ -259,14 +259,14 @@ public class SistemaDeTurnosTest {
 	 */
 	@Test
 	public void votarTest() {
-		sistema.agregarMesa(F.general, F.dniGaladriel);
+		SistemaDeTurnos.agregarMesa(F.general, F.dniGaladriel);
 		
-		sistema.asignarTurno(F.dniFrodo);
+		SistemaDeTurnos.asignarTurno(F.dniFrodo);
 		//Pudo votar
-		Boolean voto = sistema.votar(F.dniFrodo);
+		Boolean voto = SistemaDeTurnos.votar(F.dniFrodo);
 		assertTrue(voto);
 		//No puede votar al intentar votar nuevamente
-		assertFalse(sistema.votar(F.dniFrodo));
+		assertFalse(SistemaDeTurnos.votar(F.dniFrodo));
 		
 	}
 	/*
@@ -276,17 +276,17 @@ public class SistemaDeTurnosTest {
 	public void irepFranjaHorariaTest() {
 		final List<Integer> dnis = generarNDnis(F.cantDnis);
 				
-		final Integer numMesa = sistema.agregarMesa(F.enfPreexistente, F.dniFrodo);
+		final Integer numMesa = SistemaDeTurnos.agregarMesa(F.enfPreexistente, F.dniFrodo);
 		
 		//Una mesa con enfPreexistente soporta 20 votantes por franja horaria
 		//Tengo 10 franjas horarias: 8,9,10....17
 		//Deberia admitir como maximo 20 * 10 votantes = F.cantDnis
 		
-		//Cargo en el sistema  F.cantDnis votantes
+		//Cargo en el SistemaDeTurnos  F.cantDnis votantes
 		// Todos utilizando su dni como nombre, con 70 de edad y con enf preexistente
 		
 		for(Integer dni: dnis) {
-			sistema.registrarVotante(
+			SistemaDeTurnos.registrarVotante(
 					dni
 					, String.valueOf(dni)
 					, F.edad
@@ -294,11 +294,11 @@ public class SistemaDeTurnosTest {
 					, !F.trabaja);
 		}
 		
-		sistema.asignarTurnos();
+		SistemaDeTurnos.asignarTurnos();
 		
 		// FranjaHoraria -> List<Dni>
 		final Map<Integer,List<Integer>> asignadosXFranjaHoraria = 
-				sistema.asignadosAMesa(numMesa);
+				SistemaDeTurnos.asignadosAMesa(numMesa);
 		
 		for(List<Integer> franjaHoraria: asignadosXFranjaHoraria.values()) {
 			//Cada franja tiene que tener exactamente 20 votantes

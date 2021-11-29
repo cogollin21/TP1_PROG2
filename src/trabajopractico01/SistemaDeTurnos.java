@@ -6,19 +6,75 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+
+import java.util.Iterator;
 import java.util.List;
 
 
-public class sistema {
-   List <persona> RegistroDeVotantes;//agrego comentario de prueba "ama gay "
-   List <mesa> RegistroDeMesas;
-   List <turno> RegistroDeTurnos;
-   Integer Cantdegentequevoto=0;
-   String nombre;
+public class SistemaDeTurnos {
+  private List <persona> RegistroDeVotantes;
+  private List <mesa> RegistroDeMesas;
+  private List <turno> RegistroDeTurnos;
+  private Integer Cantdegentequevoto=0;
+  private String nombre;
+  private int creaMesa(String tipomesa, persona pers, boolean existe) {
+		if (tipomesa == "Enf_Preex" && existe) {
+			mesa m = new Enf_Preex();
+			m.agregarpresidente(pers);
+			this.RegistroDeMesas.add(m);
+			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
+			m.agregarturno(nuevo);
+			this.RegistroDeTurnos.add(nuevo);
+			return m.getNumerodemesa();
+		}
+		if (tipomesa == "Mayor65" && existe) {
+			mesa m = new mesamayores();
+			m.agregarpresidente(pers);
+			this.RegistroDeMesas.add(m);
+			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
+			// this.RegistroDeTurnos.add(nuevo);
+			m.agregarturno(nuevo);
+			this.RegistroDeTurnos.add(nuevo);
+			return m.getNumerodemesa();
+		}
+		if (tipomesa == "General" && existe) {
+			mesa m = new mesacomun();
+			m.agregarpresidente(pers);
+			this.RegistroDeMesas.add(m);
+			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
+			// this.RegistroDeTurnos.add(nuevo);
+			m.agregarturno(nuevo);
+			this.RegistroDeTurnos.add(nuevo);
+			return m.getNumerodemesa();
+		} else {
+			// if(tipomesa == "Trabajador"&& existe) {
+			mesa m = new mesatrabajadores();
+			m.agregarpresidente(pers);
+			this.RegistroDeMesas.add(m);
+			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
+			// this.RegistroDeTurnos.add(nuevo);
+			m.agregarturno(nuevo);
+			this.RegistroDeTurnos.add(nuevo);
+			return m.getNumerodemesa();
+		}
+  }
+   
+   @Override
+public String toString() {
+	   StringBuilder sb = new StringBuilder();
+	   sb.append("bienvenido al ");
+	   sb.append(nombre);
+	   sb.append(" llevan votando ");
+	   sb.append(Cantdegentequevoto);
+	   sb.append(" personas");
+	   
+	return sb.toString()  ;
+}
+
    
    
   
-public sistema (String f ) {
+public SistemaDeTurnos (String f ) {
 	this.nombre=f;
 	this.RegistroDeMesas= new ArrayList <mesa>();
 	this.RegistroDeVotantes= new ArrayList <persona>();
@@ -34,8 +90,11 @@ public boolean ExistePersona ( persona p ) {
 }
 
 public boolean tieneturno (int dni) { //busca si una persona tiene turno por dni
-	for (persona p : this.RegistroDeVotantes) {
-		if (p.getDni()==dni && p.isTiene_turno()) {
+	Iterator<persona>  it = this.RegistroDeVotantes.iterator();
+	while (it.hasNext()) {
+		
+	
+		if (((persona) it).getDni()==dni && ((persona) it).isTiene_turno()) {
 			return true;
 		}
 	}
@@ -47,7 +106,7 @@ public boolean mesatieneturnodispobible (String tipodemesa){ //me dice si hay un
 	if (tipodemesa=="mesacomun") {
 		cupos= 30;
 	}
-	if (tipodemesa=="mesaenfermedades") {
+	if (tipodemesa=="Enf_Preex") {
 		cupos=20;
 	}
 	if(tipodemesa=="mesamayores") {
@@ -93,19 +152,19 @@ public ArrayList <Tupla<String,Integer>> sinTurnoSegunTipoMesa (){ // devuelve u
 	int mayores=0;
 	int trabajadores=0;
 	for ( persona p : this.RegistroDeVotantes) {				
-		if (p.isEs_trabajador()&& !p.tiene_turno) {
+		if (p.isEs_trabajador()&& !p.isTiene_turno()) {
 			trabajadores++;
 		}
 		else {
-			if (p.isTiene_enfermedad()&& !p.tiene_turno) {
+			if (p.isTiene_enfermedad()&& !p.isTiene_turno()) {
 				enfermedades++;
 			}
 			else {
-				if ( p.getEdad()>65 && !p.tiene_turno) {
+				if ( p.getEdad()>65 && !p.isTiene_turno()) {
 					mayores++;
 				}
 				else {
-					if (!p.tiene_turno) {
+					if (!p.isTiene_turno()) {
 					comun++;
 				}
 			}}
@@ -188,8 +247,8 @@ public boolean registrarVotante (Integer dni ,String nombre , Integer edad ,bool
 	
 	}
 		else {
-	this.RegistroDeVotantes.add(gente);
-	return true;}
+	
+	return this.RegistroDeVotantes.add(gente);}
 		
 }
 
@@ -202,18 +261,18 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 //	if (!buscarpordni (dni)) {
 //		return null;  //devuelve null porque la persona no esta 
 //	}
-	if (sujeto.tiene_turno) { // pregunta si la persona ya tiene un turno
+	if (sujeto.isTiene_turno()) { // pregunta si la persona ya tiene un turno
 		for ( turno t : this.RegistroDeTurnos) {
 			if ( t.getDni()==dni) {
 				return new Tupla <Integer,Integer> (t.getNum_demesa(),t.getFranja_horaria()); //devuelvo el turno de la persona
 			}
 		}
 	}
-	if (sujeto.es_trabajador) { 
+	if (sujeto.isEs_trabajador()) { 
 		int aleatorio = (int) (Math.random()*(11-8+1)+8);// genera numero aleatorio entre 11 y 8
 			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
 			if (m.getTipo()=="mesatrabajadores") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
-				for (Entry<Integer,ArrayList<turno>> franjas : m.turnosdisponibles.entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
+				for (Entry<Integer,ArrayList<turno>> franjas : m.getTurnosdisponibles().entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
 					if (franjas.getKey()==aleatorio) { // *EL CORTE NO VA* RECORRO EL ARREGLO (VALUE) DE CADA FRANJA (KEY) ABER SI TENGO CUPO
 						turno nuevo = new turno (franjas.getKey(),m.getNumerodemesa(),sujeto.getDni());// crea un turno nuevo
 						franjas.getValue().add(nuevo); //AGREGO UN NUEVO TURNO
@@ -233,12 +292,12 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 			
 		
 	}
-	if (sujeto.tiene_enfermedad && !sujeto.es_trabajador) {
-		if (mesatieneturnodispobible ("mesaenfermedades")){  // ME FIJO SI TENGO TURNOS EN ESE TIPO DE MESAS
+	if (sujeto.isTiene_enfermedad() && !sujeto.isEs_trabajador()) {
+		if (mesatieneturnodispobible ("Enf_Preex")){  // ME FIJO SI TENGO TURNOS EN ESE TIPO DE MESAS
 			int cupos= 20;	//CUPO MAXIMO DE TURNOS
 			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
-			if (m.getTipo()=="mesaenfermedades") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
-				for (Entry<Integer,ArrayList<turno>> franjas : m.turnosdisponibles.entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
+			if (m.getTipo()=="Enf_Preex") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
+				for (Entry<Integer,ArrayList<turno>> franjas : m.getTurnosdisponibles().entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
 					if (franjas.getValue().size()<cupos && corte) { // *EL CORTE NO VA* RECORRO EL ARREGLO (VALUE) DE CADA FRANJA (KEY) ABER SI TENGO CUPO
 						turno nuevo = new turno (franjas.getKey(),m.getNumerodemesa(),sujeto.getDni());// crea un turno nuevo
 						franjas.getValue().add(nuevo); //AGREGO UN NUEVO TURNOS
@@ -258,12 +317,12 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 			
 		}
 	}
-	if (sujeto.getEdad()>65 && !sujeto.es_trabajador) {
+	if (sujeto.getEdad()>65 && !sujeto.isEs_trabajador()) {
 		if (mesatieneturnodispobible ("mesamayores")){  // ME FIJO SI TENGO TURNOS EN ESE TIPO DE MESAS
 			int cupos= 10;	//CUPO MAXIMO DE TURNOS
 			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
 			if (m.getTipo()=="mesamayores") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
-				for (Entry<Integer,ArrayList<turno>> franjas : m.turnosdisponibles.entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
+				for (Entry<Integer,ArrayList<turno>> franjas : m.getTurnosdisponibles().entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
 					if (franjas.getValue().size()<cupos && corte) { // *EL CORTE NO VA* RECORRO EL ARREGLO (VALUE) DE CADA FRANJA (KEY) ABER SI TENGO CUPO
 						turno nuevo = new turno (franjas.getKey(),m.getNumerodemesa(),sujeto.getDni());// crea un turno nuevo
 						franjas.getValue().add(nuevo); //AGREGO UN NUEVO TURNOS
@@ -287,8 +346,8 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 		if (mesatieneturnodispobible ("mesacomun")){  // ME FIJO SI TENGO TURNOS EN ESE TIPO DE MESAS
 			int cupos= 30;	//CUPO MAXIMO DE TURNOS
 			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
-			if (m.getTipo()=="mesamayores") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
-				for (Entry<Integer,ArrayList<turno>> franjas : m.turnosdisponibles.entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
+			if (m.getTipo()=="mesacomun") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
+				for (Entry<Integer,ArrayList<turno>> franjas : m.getTurnosdisponibles().entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
 					if (franjas.getValue().size()<cupos && corte) { // *EL CORTE NO VA* RECORRO EL ARREGLO (VALUE) DE CADA FRANJA (KEY) ABER SI TENGO CUPO
 						turno nuevo = new turno (franjas.getKey(),m.getNumerodemesa(),sujeto.getDni());// crea un turno nuevo
 						franjas.getValue().add(nuevo); //AGREGO UN NUEVO TURNOS
@@ -371,70 +430,22 @@ public int agregarMesa (String tipomesa , Integer dni) { //crea una mesa y devue
 	}
 	else {
 	for (persona p : this.RegistroDeVotantes) {
-		
-		if (p.getDni()==dni && !p.isEs_presidente()&& !p.isTiene_turno()) {
-			existe=true;
-			pers=p;
-			p.setEs_presidente(true);
-			p.setTiene_turno(true);
-			
-			
-			
+		if (p.getDni()==dni) {
+			if (p.puedeSerPresidente()) {
+				existe=true;
+				pers=p;
+				p.setEs_presidente(true);
+				p.setTiene_turno(true);
+							
+			}
 		}
 		
+		
 	}
-	
-	
 	//for (persona p : this.RegistroDeVotantes)
 	
-	if(tipomesa == "Enf_Preex" && existe) { 
-	 mesa m = new mesaenfermedades ();
-	 m.agregarpresidente(pers);
-	 this.RegistroDeMesas.add(m);
-	 turno nuevo = new turno (8,m.getNumerodemesa(),pers.getDni());
-	 m.agregarturno(nuevo);
-	 this.RegistroDeTurnos.add(nuevo);
-	 return m.getNumerodemesa();
-	}
-	if(tipomesa == "Mayor65"&& existe) { 
-	mesa m = new mesamayores ();
-	m.agregarpresidente(pers);
-	 this.RegistroDeMesas.add(m);
-	 turno nuevo = new turno (8,m.getNumerodemesa(),pers.getDni());
-	 //this.RegistroDeTurnos.add(nuevo);
-	 m.agregarturno(nuevo);
-	 this.RegistroDeTurnos.add(nuevo);
-	 return m.getNumerodemesa();
-	}
-	if(tipomesa == "General"&& existe) { 
-	 mesa m = new mesacomun ();
-	 m.agregarpresidente(pers);
-	 this.RegistroDeMesas.add(m);
-	 turno nuevo = new turno (8,m.getNumerodemesa(),pers.getDni());
-	// this.RegistroDeTurnos.add(nuevo);
-	 m.agregarturno(nuevo);
-	 this.RegistroDeTurnos.add(nuevo);
-	 return m.getNumerodemesa();
-	}
-	else {
-	//if(tipomesa == "Trabajador"&& existe) { 
-		mesa m = new mesatrabajadores ();
-		m.agregarpresidente(pers);
-		 this.RegistroDeMesas.add(m);
-		 turno nuevo = new turno (8,m.getNumerodemesa(),pers.getDni());
-		// this.RegistroDeTurnos.add(nuevo);
-		 m.agregarturno(nuevo);
-		 this.RegistroDeTurnos.add(nuevo);
-		 return m.getNumerodemesa();
-	}
-
-
-
-
-
-
-
-
+	return this.creaMesa(tipomesa, pers, existe);
+	
 	}
 }
 }

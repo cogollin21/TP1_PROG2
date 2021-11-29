@@ -15,6 +15,12 @@ public class mesatrabajadores extends mesa {
 		
 	}
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "presidente " +presidente+ "numero de mesa "+numerodemesa+" "+"mesa de tipo trabajadores";
+	}
+
 	
 
 
