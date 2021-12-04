@@ -12,13 +12,14 @@ public abstract class mesa {
 	protected static	Integer cantmesas=0;
 	protected Integer cantdevotantesenmesa=0;
 	protected Map <Integer , ArrayList <turno>> turnosdisponibles= new HashMap <Integer,ArrayList <turno>>();;
-
+	
 
 
 public  void agregarpresidente (persona p) {
 	this.presidente = p;
 	
 }
+abstract turno asignarturnomesa(persona p);
 
 public void agregarturno (turno t) { //agrega un turno en la primer franja , es para el presidente
 	this.turnosdisponibles.get(8).add(t);

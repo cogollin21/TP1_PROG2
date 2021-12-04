@@ -3,12 +3,13 @@ package trabajopractico01;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
-public class mesacomun extends mesa {
+public class General extends mesa {
 	
-	public mesacomun() {
+	public General() {
 		this.numerodemesa= mesa.cantmesas++;
-		this.tipo="mesacomun";
+		this.tipo="General";
 		
 		this.turnosdisponibles.put(8,new ArrayList <turno>());
 		this.turnosdisponibles.put(9,new ArrayList <turno>());
@@ -28,6 +29,23 @@ public class mesacomun extends mesa {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "presidente " +presidente+ "numero de mesa "+numerodemesa+" "+"mesa de tipo comun";
+	}
+
+	@Override
+	turno asignarturnomesa(persona p) {
+		// TODO Auto-generated method stub
+		int cupos= 30;
+		for (Entry<Integer,ArrayList<turno>> franjas : this.getTurnosdisponibles().entrySet()) { //RECORRO LOS TURNOS DE TODAS LAS FRANJAS HORARIAS
+			if (franjas.getValue().size()<cupos ) {
+				turno nuevo = new turno (franjas.getKey(),this.getNumerodemesa(),p.getDni());// crea un turno nuevo
+				franjas.getValue().add(nuevo); //AGREGO UN NUEVO TURNO
+				p.setTiene_turno(true); //MODIFICO EL ESTADO DE TURNO DE LA PERSONA
+				this.sumarvotante(); // sumo un votante a la cantidad de votantes en mesa
+				return nuevo;
+			}
+		
+	}
+		return null;
 	}
 
 	
