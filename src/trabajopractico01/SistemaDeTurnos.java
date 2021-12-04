@@ -12,49 +12,49 @@ import java.util.List;
 
 
 public class SistemaDeTurnos {
-  private List <persona> RegistroDeVotantes;
-  private List <mesa> RegistroDeMesas;
-  private List <turno> RegistroDeTurnos;
-  private Integer Cantdegentequevoto=0;
+  private List <Persona> registroDeVotantes;
+  private List <Mesa> registroDeMesas;
+  private List <Turno> registroDeTurnos;
+  private Integer cantdegentequevoto=0;
   private String nombre;
-  private int creaMesa(String tipomesa, persona pers, boolean existe) {
-		if (tipomesa == "Enf_Preex" && existe) {
-			mesa m = new Enf_Preex();
+  private int creaMesa(String tipoMesa, Persona pers, boolean existe) {
+		if (tipoMesa == "Enf_Preex" && existe) {
+			Mesa m = new Enf_Preex();
 			m.agregarpresidente(pers);
-			this.RegistroDeMesas.add(m);
-			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
+			this.registroDeMesas.add(m);
+			Turno nuevo = new Turno(8, m.getNumerodemesa(), pers.getDni());
 			m.agregarturno(nuevo);
-			this.RegistroDeTurnos.add(nuevo);
+			this.registroDeTurnos.add(nuevo);
 			return m.getNumerodemesa();
 		}
-		if (tipomesa == "Mayor65" && existe) {
-			mesa m = new Mayor65();
+		if (tipoMesa == "Mayor65" && existe) {
+			Mesa m = new Mayor65();
 			m.agregarpresidente(pers);
-			this.RegistroDeMesas.add(m);
-			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
-			// this.RegistroDeTurnos.add(nuevo);
+			this.registroDeMesas.add(m);
+			Turno nuevo = new Turno(8, m.getNumerodemesa(), pers.getDni());
+			// this.registroDeTurnos.add(nuevo);
 			m.agregarturno(nuevo);
-			this.RegistroDeTurnos.add(nuevo);
+			this.registroDeTurnos.add(nuevo);
 			return m.getNumerodemesa();
 		}
-		if (tipomesa == "General" && existe) {
-			mesa m = new General();
+		if (tipoMesa == "General" && existe) {
+			Mesa m = new General();
 			m.agregarpresidente(pers);
-			this.RegistroDeMesas.add(m);
-			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
-			// this.RegistroDeTurnos.add(nuevo);
+			this.registroDeMesas.add(m);
+			Turno nuevo = new Turno(8, m.getNumerodemesa(), pers.getDni());
+			// this.registroDeTurnos.add(nuevo);
 			m.agregarturno(nuevo);
-			this.RegistroDeTurnos.add(nuevo);
+			this.registroDeTurnos.add(nuevo);
 			return m.getNumerodemesa();
 		} else {
-			// if(tipomesa == "Trabajador"&& existe) {
-			mesa m = new Trabajador();
+			// if(tipoMesa == "Trabajador"&& existe) {
+			Mesa m = new Trabajador();
 			m.agregarpresidente(pers);
-			this.RegistroDeMesas.add(m);
-			turno nuevo = new turno(8, m.getNumerodemesa(), pers.getDni());
-			// this.RegistroDeTurnos.add(nuevo);
+			this.registroDeMesas.add(m);
+			Turno nuevo = new Turno(8, m.getNumerodemesa(), pers.getDni());
+			// this.registroDeTurnos.add(nuevo);
 			m.agregarturno(nuevo);
-			this.RegistroDeTurnos.add(nuevo);
+			this.registroDeTurnos.add(nuevo);
 			return m.getNumerodemesa();
 		}
   }
@@ -65,7 +65,7 @@ public String toString() {
 	   sb.append("bienvenido al ");
 	   sb.append(nombre);
 	   sb.append(" llevan votando ");
-	   sb.append(Cantdegentequevoto);
+	   sb.append(cantdegentequevoto);
 	   sb.append(" personas");
 	   
 	return sb.toString()  ;
@@ -74,34 +74,34 @@ public String toString() {
    
    
   
-public SistemaDeTurnos (String f ) {
-	this.nombre=f;
-	this.RegistroDeMesas= new ArrayList <mesa>();
-	this.RegistroDeVotantes= new ArrayList <persona>();
-	this.RegistroDeTurnos=new ArrayList <turno>();
+public SistemaDeTurnos (String  nombreSistema) {
+	this.nombre= nombreSistema;
+	this.registroDeMesas= new ArrayList <Mesa>();
+	this.registroDeVotantes= new ArrayList <Persona>();
+	this.registroDeTurnos=new ArrayList <Turno>();
 	
 	
 }
 
-public boolean ExistePersona ( persona p ) {
+public boolean ExistePersona ( Persona p ) {
 	
-	return this.RegistroDeVotantes.contains(p);
+	return this.registroDeVotantes.contains(p);
 
 }
 
-public boolean tieneturno (int dni) { //busca si una persona tiene turno por dni
-	Iterator<persona>  it = this.RegistroDeVotantes.iterator();
+public boolean tieneturno (int dni) { //busca si una Persona tiene Turno por dni
+	Iterator<Persona>  it = this.registroDeVotantes.iterator();
 	while (it.hasNext()) {
 		
 	
-		if (((persona) it).getDni()==dni && ((persona) it).isTiene_turno()) {
+		if (((Persona) it).getDni()==dni && ((Persona) it).isTiene_turno()) {
 			return true;
 		}
 	}
 	return false;
 }
 
-public boolean mesatieneturnodispobible (String tipodemesa){ //me dice si hay una mesa especifica con turno libre
+public boolean mesatieneturnodispobible (String tipodemesa){ //me dice si hay una mesa especifica con Turno libre
 	int cupos=99999999;
 	if (tipodemesa=="General") {
 		cupos= 30;
@@ -113,10 +113,10 @@ public boolean mesatieneturnodispobible (String tipodemesa){ //me dice si hay un
 		cupos=10;
 	}
 	
-	for ( mesa m : this.RegistroDeMesas) {
+	for ( Mesa m : this.registroDeMesas) {
 		if (m.getTipo()==tipodemesa) {
 			
-			for	(ArrayList <turno> arreglo : m.turnosdisponibles.values()) {
+			for	(ArrayList <Turno> arreglo : m.turnosdisponibles.values()) {
 				if (arreglo.size()<cupos) {
 					return true;
 				}			
@@ -127,13 +127,13 @@ public boolean mesatieneturnodispobible (String tipodemesa){ //me dice si hay un
 	return false;
 		}
 	
-public int  cantidaddevotantesenmesa (String tipodemesa) { //devuelve la cantidad de personas que votan en esa mesa
+public int   votantesConTurno (String  tipoMesa) { //devuelve la cantidad de personas que votan en esa mesa
 	int contador=0;
-	if (tipodemesa!="Enf_Preex" && tipodemesa!="Mayor65" && tipodemesa!="General"&& tipodemesa!="Trabajador" ) {
+	if ( tipoMesa!="Enf_Preex" &&  tipoMesa!="Mayor65" &&  tipoMesa!="General"&&  tipoMesa!="Trabajador" ) {
 		throw new RuntimeException("la mesa esta mal escrita");
 	}
-	for (mesa m : this.RegistroDeMesas) {
-		if (m.getTipo()==tipodemesa) {
+	for (Mesa m : this.registroDeMesas) {
+		if (m.getTipo()== tipoMesa) {
 			contador=contador+m.getCantdevotantesenmesa();
 		}
 	}
@@ -151,7 +151,7 @@ public ArrayList <Tupla<String,Integer>> sinTurnoSegunTipoMesa (){ // devuelve u
 	int enfermedades=0;
 	int mayores=0;
 	int trabajadores=0;
-	for ( persona p : this.RegistroDeVotantes) {				
+	for ( Persona p : this.registroDeVotantes) {				
 		if (p.isEs_trabajador()&& !p.isTiene_turno()) {
 			trabajadores++;
 		}
@@ -183,11 +183,11 @@ public ArrayList <Tupla<String,Integer>> sinTurnoSegunTipoMesa (){ // devuelve u
 
 
 
-public Tupla <Integer,Integer> consultarturno (Integer dni){ //devuelve el turno que tiene asignado un dni
-	if (!this.RegistroDeVotantes.contains(devuelvepersonasegundni(dni))){
-		throw new RuntimeException("la persona no se encuentra registrada");
+public Tupla <Integer,Integer> consultaTurno (Integer dni){ //devuelve el Turno que tiene asignado un dni
+	if (!this.registroDeVotantes.contains(devuelvepersonasegundni(dni))){
+		throw new RuntimeException("la Persona no se encuentra registrada");
 	}else {
-	for ( turno t : this.RegistroDeTurnos) {
+	for ( Turno t : this.registroDeTurnos) {
 		if (t.getDni()== dni) {
 			return new Tupla <Integer,Integer> (t.getNum_demesa(),t.getFranja_horaria()); 
 		}
@@ -195,22 +195,27 @@ public Tupla <Integer,Integer> consultarturno (Integer dni){ //devuelve el turno
 		
 	}
 	return null;
+
 	
+	
+	
+		
 }
+		
 }
 
-public Map <Integer,List<Integer>> asignadosAMesa (Integer numdemesa){ //devuelve un map con clave = franja horaria y valor arreglo de las personas que votan en esa franja
-	if (devuelvemesasegunnumero(numdemesa)==null) {
+public Map <Integer,List<Integer>> asignadosAMesa (Integer numdeMesa){ //devuelve un map con clave = franja horaria y valor arreglo de las personas que votan en esa franja
+	if (devuelvemesasegunnumero(numdeMesa)==null) {
 		throw new RuntimeException("la mesa no se encuentra creada");
 	}
 	Map <Integer,List<Integer>> reportedeturnos = new HashMap <Integer,List<Integer>> (); //creo el map que va a salir
-	for ( mesa m : this.RegistroDeMesas) { //recorro todas las mesas
-		 if (m.getNumerodemesa()==numdemesa) { //ubico la mesa correspondiente a ese numero
-			 for (Entry<Integer,ArrayList<turno>> franjas : m.turnosdisponibles.entrySet()) {  //recorro la franjas horarias de esa mesa
-				 ArrayList <turno> auxiliar = new ArrayList <turno>(); //creo una variable auxiliar que voy a recorrer
-				 ArrayList <Integer> convertida = new ArrayList <Integer>(); // esta variable va a recibir los dni de turno de <turno> a integer
+	for ( Mesa m : this.registroDeMesas) { //recorro todas las mesas
+		 if (m.getNumerodemesa()==numdeMesa) { //ubico la mesa correspondiente a ese numero
+			 for (Entry<Integer,ArrayList<Turno>> franjas : m.turnosdisponibles.entrySet()) {  //recorro la franjas horarias de esa mesa
+				 ArrayList <Turno> auxiliar = new ArrayList <Turno>(); //creo una variable auxiliar que voy a recorrer
+				 ArrayList <Integer> convertida = new ArrayList <Integer>(); // esta variable va a recibir los dni de Turno de <Turno> a integer
 				 auxiliar=franjas.getValue();
-				 for (turno t : auxiliar ) {		//con este for recorro el array de turno y lo paso a integer
+				 for (Turno t : auxiliar ) {		//con este for recorro el array de Turno y lo paso a integer
 					 convertida.add(t.getDni());
 				 }
 				 reportedeturnos.put(franjas.getKey(), convertida);
@@ -227,7 +232,7 @@ public Map <Integer,List<Integer>> asignadosAMesa (Integer numdemesa){ //devuelv
 
 
 public boolean buscarpordni (int dni) {  //devuelve true si esta
-	for (persona p : this.RegistroDeVotantes) {
+	for (Persona p : this.registroDeVotantes) {
 		if (p.getDni()==dni) {
 			return true;
 		}
@@ -236,39 +241,39 @@ public boolean buscarpordni (int dni) {  //devuelve true si esta
 }
 
 
-public boolean registrarVotante (Integer dni ,String nombre , Integer edad ,boolean enfprevia ,boolean trabaja) {
+public boolean registrarVotante (Integer dni ,String nombre , Integer edad ,boolean enfPrevia ,boolean trabaja) {
 	if (edad < 16) {
 		throw new RuntimeException("debe ser mayor de 16 años");
 	}
-	persona gente = new persona (dni,nombre,edad,enfprevia,trabaja);
+	Persona gente = new Persona (dni,nombre,edad,enfPrevia,trabaja);
 	
-		if (this.RegistroDeVotantes.contains(gente)) {
-			throw new RuntimeException("la persona ya se encuentra registrada");
+		if (this.registroDeVotantes.contains(gente)) {
+			throw new RuntimeException("la Persona ya se encuentra registrada");
 	
 	}
 		else {
 	
-	return this.RegistroDeVotantes.add(gente);}
+	return this.registroDeVotantes.add(gente);}
 		
 }
 
 public Tupla <Integer,Integer> asignarTurno (Integer dni){
 	Tupla<Integer,Integer> retorno =new Tupla<Integer,Integer>(0,0);
-	turno turnodevuelto;
+	Turno turnodevuelto;
 	boolean corte=true;
-	persona sujeto=devuelvepersonasegundni (dni);
+	Persona sujeto=devuelvepersonasegundni (dni);
 	
-	if (!this.RegistroDeVotantes.contains(devuelvepersonasegundni(dni))){
-		throw new RuntimeException("la persona no se encuentra registrada");
+	if (!this.registroDeVotantes.contains(devuelvepersonasegundni(dni))){
+		throw new RuntimeException("la Persona no se encuentra registrada");
 	}
 	
 //	if (!buscarpordni (dni)) {
-//		return null;  //devuelve null porque la persona no esta 
+//		return null;  //devuelve null porque la Persona no esta 
 //	}
-	if (sujeto.isTiene_turno()) { // pregunta si la persona ya tiene un turno
-		for ( turno t : this.RegistroDeTurnos) {
+	if (sujeto.isTiene_turno()) { // pregunta si la Persona ya tiene un Turno
+		for ( Turno t : this.registroDeTurnos) {
 			if ( t.getDni()==dni) {
-				return new Tupla <Integer,Integer> (t.getNum_demesa(),t.getFranja_horaria()); //devuelvo el turno de la persona
+				return new Tupla <Integer,Integer> (t.getNum_demesa(),t.getFranja_horaria()); //devuelvo el Turno de la Persona
 			}
 		}
 	}
@@ -276,13 +281,13 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 	
 	
 	if (sujeto.isEs_trabajador()) { 
-			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
+			for ( Mesa m : this.registroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
 			if (m.getTipo()=="Trabajador") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
 				turnodevuelto=m.asignarturnomesa(sujeto);
-						this.RegistroDeTurnos.add(turnodevuelto); //agrego el turno al registro de turnos
+						this.registroDeTurnos.add(turnodevuelto); //agrego el Turno al registro de turnos
 						retorno.setX(turnodevuelto.getNum_demesa());
 						retorno.setY(turnodevuelto.getFranja_horaria());
-						return retorno; //DEVUELVO LOS DATOS DEL TURNO
+						return retorno; //DEVUELVO LOS DATOS DEL Turno
 						
 					}
 					
@@ -297,13 +302,13 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 				//revisar esto
 	else if (sujeto.isTiene_enfermedad()) {  
 		if (mesatieneturnodispobible ("Enf_Preex")){  // ME FIJO SI TENGO TURNOS EN ESE TIPO DE MESAS
-			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
+			for ( Mesa m : this.registroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
 			if (m.getTipo()=="Enf_Preex") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
 				turnodevuelto=m.asignarturnomesa(sujeto);
-				this.RegistroDeTurnos.add(turnodevuelto); //agrego el turno al registro de turnos
+				this.registroDeTurnos.add(turnodevuelto); //agrego el Turno al registro de turnos
 				retorno.setX(turnodevuelto.getNum_demesa());
 				retorno.setY(turnodevuelto.getFranja_horaria());
-				return retorno; //DEVUELVO LOS DATOS DEL TURNO
+				return retorno; //DEVUELVO LOS DATOS DEL Turno
 					}
 					
 				}
@@ -319,10 +324,10 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 	else  if (sujeto.getEdad()>65 ) {
 		if (mesatieneturnodispobible ("Mayor65")){  // ME FIJO SI TENGO TURNOS EN ESE TIPO DE MESAS
 				//CUPO MAXIMO DE TURNOS
-			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
+			for ( Mesa m : this.registroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
 			if (m.getTipo()=="Mayor65") { 
 				turnodevuelto=m.asignarturnomesa(sujeto);
-				this.RegistroDeTurnos.add(turnodevuelto); //agrego el turno al registro de turnos
+				this.registroDeTurnos.add(turnodevuelto); //agrego el Turno al registro de turnos
 				retorno.setX(turnodevuelto.getNum_demesa());
 				retorno.setY(turnodevuelto.getFranja_horaria());
 				return retorno;// SI TENGO UNA MESA DE ESE TIPO ENTRO
@@ -339,10 +344,10 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 	else {
 		if (mesatieneturnodispobible ("General")){  // ME FIJO SI TENGO TURNOS EN ESE TIPO DE MESAS
 			
-			for ( mesa m : this.RegistroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
+			for ( Mesa m : this.registroDeMesas) {    //RECORRO TODAS LAS MESAS DE MI REGISTRO
 			if (m.getTipo()=="General") {   // SI TENGO UNA MESA DE ESE TIPO ENTRO
 				turnodevuelto=m.asignarturnomesa(sujeto);
-				this.RegistroDeTurnos.add(turnodevuelto); //agrego el turno al registro de turnos
+				this.registroDeTurnos.add(turnodevuelto); //agrego el Turno al registro de turnos
 				retorno.setX(turnodevuelto.getNum_demesa());
 				retorno.setY(turnodevuelto.getFranja_horaria());
 				return retorno;//
@@ -363,7 +368,7 @@ public Tupla <Integer,Integer> asignarTurno (Integer dni){
 
 public int asignarTurnos () {
 	int turnosasignados=0;
-	for (persona p : this.RegistroDeVotantes) {
+	for (Persona p : this.registroDeVotantes) {
 		if (!p.isTiene_turno()) {
 			Tupla<Integer, Integer> asignacion =asignarTurno (p.getDni()); 
 			turnosasignados++;
@@ -375,22 +380,22 @@ public int asignarTurnos () {
 
 public boolean votar (Integer dni) {
 	
-	persona sujeto=null;
-	if (!buscarpordni(dni)) { //se fija si la persona esta en el registro
-		throw new RuntimeException("la persona no se encuentra registrada");
+	Persona sujeto=null;
+	if (!buscarpordni(dni)) { //se fija si la Persona esta en el registro
+		throw new RuntimeException("la Persona no se encuentra registrada");
 	}
 	sujeto=devuelvepersonasegundni(dni);
 	if (sujeto.isYa_voto()) {
 		return false; //debe enviar una excepcion
 	}
 	sujeto.setYa_voto(true);
-	this.Cantdegentequevoto++;
+	this.cantdegentequevoto++;
 	return true;
 	
 }
-public mesa devuelvemesasegunnumero (Integer numdemesa) {		//me trae la mesa segun el numero
-	mesa banca =null;
-	for (mesa m : this.RegistroDeMesas) {
+public Mesa devuelvemesasegunnumero (Integer numdemesa) {		//me trae la mesa segun el numero
+	Mesa banca =null;
+	for (Mesa m : this.registroDeMesas) {
 		if (m.getNumerodemesa()==numdemesa) {
 			banca=m;
 			return banca;
@@ -399,9 +404,9 @@ public mesa devuelvemesasegunnumero (Integer numdemesa) {		//me trae la mesa seg
 	return banca;
 }
 
-public persona devuelvepersonasegundni (Integer dni) {		//me trae a la persona segun el dni
-	persona sujeto =null;
-	for (persona p : this.RegistroDeVotantes) {
+public Persona devuelvepersonasegundni (Integer dni) {		//me trae a la Persona segun el dni
+	Persona sujeto =null;
+	for (Persona p : this.registroDeVotantes) {
 		if (p.getDni()==dni) {
 			sujeto=p;
 			return sujeto;
@@ -410,17 +415,17 @@ public persona devuelvepersonasegundni (Integer dni) {		//me trae a la persona s
 	return sujeto;
 }
 
-public int agregarMesa (String tipomesa , Integer dni) { //crea una mesa y devuelve el numero de mesa
+public int agregarMesa (String tipoMesa , Integer dni) { //crea una mesa y devuelve el numero de mesa
 	boolean existe= false;
-	persona pers=null;
-	if (tipomesa!="Enf_Preex" && tipomesa!="Mayor65" && tipomesa!="General"&&tipomesa!="Trabajador" ) {
+	Persona pers=null;
+	if (tipoMesa!="Enf_Preex" && tipoMesa!="Mayor65" && tipoMesa!="General"&&tipoMesa!="Trabajador" ) {
 		throw new RuntimeException("la mesa esta mal escrita");
 	}
-	if (!this.RegistroDeVotantes.contains(devuelvepersonasegundni(dni))){
-		throw new RuntimeException("la persona no se encuentra registrada");
+	if (!this.registroDeVotantes.contains(devuelvepersonasegundni(dni))){
+		throw new RuntimeException("la Persona no se encuentra registrada");
 	}
 	else {
-	for (persona p : this.RegistroDeVotantes) {
+	for (Persona p : this.registroDeVotantes) {
 		if (p.getDni()==dni) {
 			if (p.puedeSerPresidente()) {
 				existe=true;
@@ -433,9 +438,9 @@ public int agregarMesa (String tipomesa , Integer dni) { //crea una mesa y devue
 		
 		
 	}
-	//for (persona p : this.RegistroDeVotantes)
+	//for (Persona p : this.registroDeVotantes)
 	
-	return this.creaMesa(tipomesa, pers, existe);
+	return this.creaMesa(tipoMesa, pers, existe);
 	
 	}
 }

@@ -5,23 +5,23 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public abstract class mesa {
+public abstract class Mesa {
 	protected String tipo;
-	protected persona presidente;
+	protected Persona presidente;
 	protected Integer numerodemesa;
 	protected static	Integer cantmesas=0;
 	protected Integer cantdevotantesenmesa=0;
-	protected Map <Integer , ArrayList <turno>> turnosdisponibles= new HashMap <Integer,ArrayList <turno>>();;
+	protected Map <Integer , ArrayList <Turno>> turnosdisponibles= new HashMap <Integer,ArrayList <Turno>>();;
 	
 
 
-public  void agregarpresidente (persona p) {
+public  void agregarpresidente (Persona p) {
 	this.presidente = p;
 	
 }
-abstract turno asignarturnomesa(persona p);
+abstract Turno asignarturnomesa(Persona p);
 
-public void agregarturno (turno t) { //agrega un turno en la primer franja , es para el presidente
+public void agregarturno (Turno t) { //agrega un Turno en la primer franja , es para el presidente
 	this.turnosdisponibles.get(8).add(t);
 	
 }
@@ -30,11 +30,11 @@ public Integer getCantdevotantesenmesa() {
 	return cantdevotantesenmesa;
 }
 
-public Map<Integer, ArrayList<turno>> getTurnosdisponibles() {
+public Map<Integer, ArrayList<Turno>> getTurnosdisponibles() {
 	return turnosdisponibles;
 }
 
-public void setTurnosdisponibles(Map<Integer, ArrayList<turno>> turnosdisponibles) {
+public void setTurnosdisponibles(Map<Integer, ArrayList<Turno>> turnosdisponibles) {
 	this.turnosdisponibles = turnosdisponibles;
 }
 
@@ -79,14 +79,14 @@ public boolean equals(Object obj) {
 		return false;
 	if (getClass() != obj.getClass())
 		return false;
-	mesa other = (mesa) obj;
+	Mesa other = (Mesa) obj;
 	return Objects.equals(numerodemesa, other.numerodemesa);
 }
 
 
 
 
-public persona getPresidente() {
+public Persona getPresidente() {
 	return presidente;
 }
 
@@ -113,7 +113,7 @@ public static Integer getCantmesas() {
 
 
 public static void setCantmesas(Integer cantmesas) {
-	mesa.cantmesas = cantmesas;
+	Mesa.cantmesas = cantmesas;
 }
 
 

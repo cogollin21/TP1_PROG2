@@ -105,10 +105,10 @@ public class SistemaDeTurnosTest {
 		assertNotNull(numMesaGeneral);
 		assertNotNull(numMesaTrabajador);
 		
-		assertNotNull(SistemaDeTurnos.consultarturno(F.dniFrodo));
-		assertNotNull(SistemaDeTurnos.consultarturno(F.dniBilbo));
-		assertNotNull(SistemaDeTurnos.consultarturno(F.dniGaladriel));
-		assertNotNull(SistemaDeTurnos.consultarturno(F.dniGandalf));
+		assertNotNull(SistemaDeTurnos.consultaTurno(F.dniFrodo));
+		assertNotNull(SistemaDeTurnos.consultaTurno(F.dniBilbo));
+		assertNotNull(SistemaDeTurnos.consultaTurno(F.dniGaladriel));
+		assertNotNull(SistemaDeTurnos.consultaTurno(F.dniGandalf));
 	}
 	
 	/*
@@ -222,7 +222,7 @@ public class SistemaDeTurnosTest {
 		// <NumeroMesa, FranjaHoraria>
 		final Tupla<Integer, Integer> turno = SistemaDeTurnos.asignarTurno(F.dniFrodo);
 		// <NumeroMesa, FranjaHoraria>
-		final Tupla<Integer, Integer> turnoAsignado = SistemaDeTurnos.consultarturno(F.dniFrodo);
+		final Tupla<Integer, Integer> turnoAsignado = SistemaDeTurnos.consultaTurno(F.dniFrodo);
 		
 		assertNotNull(turno);
 		assertNotNull(turnoAsignado);

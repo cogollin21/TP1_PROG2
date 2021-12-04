@@ -2,12 +2,12 @@ package trabajopractico01;
 
 import java.util.Objects;
 
-public class turno {
+public class Turno {
 private	Integer franja_horaria;
 private	Integer num_demesa;
 private	Integer dni;
 	
-public turno ( Integer franja , Integer numdemesa , Integer dni) {
+public Turno ( Integer franja , Integer numdemesa , Integer dni) {
 	this.franja_horaria=franja;
 	this.num_demesa=numdemesa;
 	this.dni=dni;
@@ -50,7 +50,7 @@ public boolean equals(Object obj) {
 		return false;
 	if (getClass() != obj.getClass())
 		return false;
-	turno other = (turno) obj;
+	Turno other = (Turno) obj;
 	return Objects.equals(dni, other.dni);
 }
 	

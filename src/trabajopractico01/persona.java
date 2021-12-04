@@ -2,7 +2,7 @@ package trabajopractico01;
 
 import java.util.Objects;
 
-public class persona {
+public class Persona {
 	private Integer dni;
 	private String nombre;
 	private Integer edad;
@@ -41,7 +41,7 @@ public void setTiene_turno(boolean tiene_turno) {
 
 
 
-public persona (Integer dni , String nombre , Integer edad ,boolean enfermedad , boolean trabajador ){
+public Persona (Integer dni , String nombre , Integer edad ,boolean enfermedad , boolean trabajador ){
 	this.dni=dni;
 	this.nombre=nombre;
 	this.edad=edad;
@@ -81,7 +81,7 @@ public boolean equals(Object obj) {
 		return false;
 	if (getClass() != obj.getClass())
 		return false;
-	persona other = (persona) obj;
+	Persona other = (Persona) obj;
 	return Objects.equals(dni, other.dni);
 }
 

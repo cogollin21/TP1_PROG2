@@ -84,10 +84,10 @@ public class Cliente {
 	
 		// hacer el toString de tupla!
 		System.out.println("Turnos generados [Paso 1]: "); 
-		System.out.println("\t- " + SistemaDeTurnos.consultarturno(F.dniFrodo));
-		System.out.println("\t- " + SistemaDeTurnos.consultarturno(F.dniBilbo));
-		System.out.println("\t- " + SistemaDeTurnos.consultarturno(F.dniGaladriel));
-		System.out.println("\t- " + SistemaDeTurnos.consultarturno(F.dniGandalf));
+		System.out.println("\t- " + SistemaDeTurnos.consultaTurno(F.dniFrodo));
+		System.out.println("\t- " + SistemaDeTurnos.consultaTurno(F.dniBilbo));
+		System.out.println("\t- " + SistemaDeTurnos.consultaTurno(F.dniGaladriel));
+		System.out.println("\t- " + SistemaDeTurnos.consultaTurno(F.dniGandalf));
 
 		System.out.println("\n======================================================"); 
 		System.out.println("Estado SistemaDeTurnos De Turnos: ");
